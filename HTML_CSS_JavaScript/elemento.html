@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animacao de elemento H1</title>
+</head>
+<body>
+    <h1>Edu adoro este professoure a aula top top</h1>
+
+    <script>
+        const animation = document.querySelector('h1');
+
+        function typing(element) {
+            const textArray = element.innerHTML.split('');
+            element.innerHTML = '';
+            textArray.forEach((letra, i) => {
+                setTimeout(() => {
+                    element.innerHTML += letra;
+                }, 100 * i); // Atraso de 100ms por caractere
+            });
+        }
+
+        typing(animation);
+    </script>
+</body>
+</html>
