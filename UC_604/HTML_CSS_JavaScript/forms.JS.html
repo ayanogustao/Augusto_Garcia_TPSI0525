@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mudar Cor</title>
+</head>
+<body>
+  <button id="bot1">OLA</button>
+
+  <script>
+    const botao = document.getElementById("bot1");
+
+    function mudacor(event) {
+      const cor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+      this.style.backgroundColor = cor;
+    }
+
+    botao.addEventListener("click", mudacor);
+  </script>
+</body>
+</html>
