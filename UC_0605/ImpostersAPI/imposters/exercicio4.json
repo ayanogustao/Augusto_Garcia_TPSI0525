@@ -1,0 +1,45 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/api/login",
+                "headers": {
+                  "Content-Type": "application/json"
+                }
+              }
+            },
+            {
+              "deepEquals": {
+                "body": {
+                  "username": "admin",
+                  "password": "secret"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "status": "ok",
+              "token": "validtoken"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

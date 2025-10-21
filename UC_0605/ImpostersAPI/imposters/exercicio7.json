@@ -1,0 +1,48 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/api/users",
+                "headers": {
+                  "Content-Type": "application/json"
+                }
+              }
+            },
+            {
+              "not": {
+                "deepEquals": {
+                  "body": {
+                    "email": "exists@example.com"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/users/123"
+            },
+            "body": {
+              "id": 123,
+              "status": "created",
+              "message": "Utilizador criado com sucesso."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
