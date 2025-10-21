@@ -1,0 +1,19 @@
+{"level":"info","message":"[mb:2525] mountebank v2.9.2 now taking orders - point your browser to http://localhost:2525/ for help","timestamp":"2025-10-21T16:04:21.277Z"}
+{"level":"info","message":"[mb:2525] PUT /imposters","timestamp":"2025-10-21T16:04:21.360Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2025-10-21T16:04:21.367Z"}
+{"level":"info","message":"[http:3000] ::1:56043 => GET /","timestamp":"2025-10-21T16:04:26.064Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:26.066Z"}
+{"level":"info","message":"[http:3000] ::1:56044 => GET /favicon.ico","timestamp":"2025-10-21T16:04:26.084Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:26.085Z"}
+{"level":"info","message":"[http:3000] ::1:56045 => GET /","timestamp":"2025-10-21T16:04:30.359Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:30.360Z"}
+{"level":"info","message":"[http:3000] ::1:56046 => GET /favicon.ico","timestamp":"2025-10-21T16:04:30.377Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:30.378Z"}
+{"level":"info","message":"[http:3000] ::1:56047 => GET /","timestamp":"2025-10-21T16:04:30.908Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:30.909Z"}
+{"level":"info","message":"[http:3000] ::1:56048 => GET /favicon.ico","timestamp":"2025-10-21T16:04:30.928Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:30.929Z"}
+{"level":"info","message":"[http:3000] ::1:56055 => GET /api/marcas","timestamp":"2025-10-21T16:04:43.472Z"}
+{"level":"info","message":"[http:3000] ::1:56056 => GET /favicon.ico","timestamp":"2025-10-21T16:04:43.495Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:04:43.496Z"}
+{"level":"info","message":"[mb:2525] Adios - see you soon?","timestamp":"2025-10-21T16:16:47.575Z"}

@@ -1,0 +1,6 @@
+{"level":"info","message":"[mb:2525] mountebank v2.9.2 now taking orders - point your browser to http://localhost:2525/ for help","timestamp":"2025-10-21T16:16:49.239Z"}
+{"level":"info","message":"[mb:2525] PUT /imposters","timestamp":"2025-10-21T16:16:49.312Z"}
+{"level":"info","message":"[http:3000] Open for business...","timestamp":"2025-10-21T16:16:49.320Z"}
+{"level":"info","message":"[http:3000] ::1:56134 => GET /api/cars?brand=Toyota","timestamp":"2025-10-21T16:17:01.484Z"}
+{"level":"info","message":"[http:3000] ::1:56135 => GET /favicon.ico","timestamp":"2025-10-21T16:17:01.508Z"}
+{"level":"info","message":"[http:3000] no predicate match, using default response","timestamp":"2025-10-21T16:17:01.509Z"}
