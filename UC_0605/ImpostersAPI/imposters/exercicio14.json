@@ -1,0 +1,42 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "method": "POST"
+              }
+            },
+            {
+              "not": {
+                "equals": {
+                  "headers": {
+                    "Content-Type": "application/json"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 415,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "unsupported_media_type",
+              "message": "O header 'Content-Type: application/json' é obrigatório."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

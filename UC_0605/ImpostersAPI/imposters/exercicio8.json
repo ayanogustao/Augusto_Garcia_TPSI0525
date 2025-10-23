@@ -1,0 +1,44 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/api/temperature",
+                "headers": {
+                  "Content-Type": "application/json"
+                }
+              }
+            },
+            {
+              "not": {
+                "contains": {
+                  "body": "value"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "missing_field",
+              "message": "O campo 'value' é obrigatório para o registo da temperatura."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

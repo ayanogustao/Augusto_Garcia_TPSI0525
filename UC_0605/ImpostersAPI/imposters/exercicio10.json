@@ -1,0 +1,42 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        {
+          "and": [
+            {
+              "equals": {
+                "method": "POST",
+                "path": "/api/tasks",
+                "headers": {
+                  "Content-Type": "application/json"
+                }
+              }
+            },
+            {
+              "contains": {
+                "body": "\"title\":\"duplicate\""
+              }
+            }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 409,
+            "headers": {
+              "Content-Type": "application/json"
+            },
+            "body": {
+              "error": "duplicate_task",
+              "message": "Já existe uma tarefa com este título."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
