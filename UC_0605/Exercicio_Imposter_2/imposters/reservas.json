@@ -1,0 +1,183 @@
+{
+  "port": 3003,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/reservas" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "reservas": [
+                { "id": 1, "cliente": "João Silva", "quarto": 101, "estado": "confirmada" },
+                { "id": 2, "cliente": "Maria Costa", "quarto": 202, "estado": "pendente" },
+                { "id": 3, "cliente": "Rui Santos", "quarto": 303, "estado": "concluída" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/reservas/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "cliente": "João Silva",
+              "quarto": 101,
+              "data_entrada": "2025-10-25",
+              "data_saida": "2025-10-30",
+              "estado": "confirmada"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/reservas/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Reserva não encontrada"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/reservas" } },
+            { "contains": { "body": "\"data_entrada\": \"2025-10-30\"" } },
+            { "contains": { "body": "\"data_saida\": \"2025-10-25\"" } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Data inválida",
+              "mensagem": "Data de saída deve ser posterior à entrada."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "POST", "path": "/api/reservas" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/reservas/4"
+            },
+            "body": {
+              "id": 4,
+              "status": "created",
+              "mensagem": "Reserva criada com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/reservas/1/estado" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "estado_antigo": "confirmada",
+              "novo_estado": "concluída"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/reservas/999/estado" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Reserva não encontrada"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/reservas/2" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "status": "cancelada",
+              "mensagem": "Reserva cancelada com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/reservas/3" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Operação não permitida",
+              "mensagem": "Não é possível cancelar uma reserva já concluída."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

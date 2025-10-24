@@ -1,0 +1,60 @@
+{
+  "port": 3000,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/alunos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "alunos": [
+                { "id": 1, "nome": "Henrique", "curso": "Redes" },
+                { "id": 2, "nome": "Manel", "curso": "Informática" },
+                { "id": 3, "nome": "Jestrudes", "curso": "Multimédia" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        { "equals": { "method": "POST", "path": "/api/alunos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "status": "created",
+              "message": "Aluno registado com sucesso!"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/alunos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "status": "deleted",
+              "message": "Aluno removido com sucesso!"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

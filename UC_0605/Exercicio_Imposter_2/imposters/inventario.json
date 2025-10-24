@@ -1,0 +1,202 @@
+{
+  "port": 3002,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/produtos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "produtos": [
+                { "id": 1, "nome": "Portátil gaming", "preco": 600.90, "stock": 10 },
+                { "id": 2, "nome": "Rato", "preco": 30.99, "stock": 0 },
+                { "id": 3, "nome": "Monitor", "preco": 129.21, "stock": 5 }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/produtos/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "nome": "Portátil",
+              "preco": 899.99,
+              "stock": 10
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/produtos/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Produto não encontrado"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/produtos" } },
+            { "contains": { "body": "\"quantidade\": -1" } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Valor inválido",
+              "mensagem": "A quantidade não pode ser negativa."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/produtos" } },
+            { "not": { "contains": { "body": "\"quantidade\": -1" } } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/produtos/4"
+            },
+            "body": {
+              "id": 4,
+              "status": "created",
+              "mensagem": "Produto adicionado com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "PUT",
+            "path": "/api/produtos/1/stock"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "stock_antigo": 10,
+              "alteracao": "+5",
+              "novo_stock": 15
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/produtos/999/stock" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Produto não encontrado",
+              "mensagem": "Não é possível atualizar o stock."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/produtos/2"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "status": "deleted",
+              "mensagem": "Produto removido (stock 0)."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "equals": {
+            "method": "DELETE",
+            "path": "/api/produtos/1"
+          }
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Não permitido",
+              "mensagem": "Não é possível remover produtos com stock > 0."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
