@@ -1,0 +1,171 @@
+{
+  "port": 3006,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/tarefas" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "tarefas": [
+                { "id": 1, "titulo": "Estudar Redes", "descricao": "Rever notas de MPLS-TP", "estado": "pendente" },
+                { "id": 2, "titulo": "Fazer Exercício Mountebank", "descricao": "Terminar imposter final", "estado": "concluída" },
+                { "id": 3, "titulo": "Treinar", "descricao": "Exercícios de peito e costas", "estado": "pendente" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/tarefas/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "titulo": "Estudar Redes",
+              "descricao": "Rever notas de MPLS-TP",
+              "estado": "pendente"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/tarefas/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Tarefa não encontrada" }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/tarefas" } },
+            { "contains": { "body": "\"titulo\": \"\"" } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Título inválido", "mensagem": "O título não pode estar vazio." }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "POST", "path": "/api/tarefas" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/tarefas/4"
+            },
+            "body": {
+              "id": 4,
+              "status": "created",
+              "mensagem": "Tarefa criada com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/tarefas/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "titulo": "Estudar Redes",
+              "estado_antigo": "pendente",
+              "novo_estado": "concluída"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/tarefas/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Tarefa não encontrada" }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/tarefas/2" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "mensagem": "Tarefa eliminada com sucesso." }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/tarefas/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Não permitido",
+              "mensagem": "Só é possível eliminar tarefas concluídas."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

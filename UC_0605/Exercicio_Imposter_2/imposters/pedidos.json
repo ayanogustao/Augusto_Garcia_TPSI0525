@@ -1,0 +1,171 @@
+{
+  "port": 3005,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/pedidos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "pedidos": [
+                { "id": 1, "cliente": "Dário", "total": 150.0, "estado": "pago" },
+                { "id": 2, "cliente": "Jackson", "total": 80.5, "estado": "enviado" },
+                { "id": 3, "cliente": "Luis", "total": 40.0, "estado": "pendente" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/pedidos/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "cliente": "Dário",
+              "itens": ["Mouse", "Teclado"],
+              "total": 150.0,
+              "estado": "pago"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/pedidos/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Pedido não encontrado" }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/pedidos" } },
+            { "contains": { "body": "\"total\": 0" } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Valor inválido", "mensagem": "O total deve ser maior que zero." }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "POST", "path": "/api/pedidos" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/pedidos/4"
+            },
+            "body": {
+              "id": 4,
+              "status": "created",
+              "mensagem": "Pedido criado com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/pedidos/3/estado" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 3,
+              "estado_antigo": "pendente",
+              "novo_estado": "pago"
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/pedidos/999/estado" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Pedido não encontrado" }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/pedidos/3" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "mensagem": "Pedido cancelado com sucesso." }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/pedidos/2" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Não permitido",
+              "mensagem": "Não é possível cancelar um pedido já enviado."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

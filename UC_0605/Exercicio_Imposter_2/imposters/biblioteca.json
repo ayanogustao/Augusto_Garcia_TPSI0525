@@ -1,0 +1,218 @@
+{
+  "port": 3004,
+  "protocol": "http",
+  "stubs": [
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/livros" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "livros": [
+                { "id": 1, "titulo": "Os Maias", "autor": "Eça de Queirós", "disponivel": true },
+                { "id": 2, "titulo": "A Cidade e as Serras", "autor": "Eça de Queirós", "disponivel": false },
+                { "id": 3, "titulo": "Mensagem", "autor": "Fernando Pessoa", "disponivel": true }
+              ]
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/livros/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "titulo": "Os Maias",
+              "autor": "Eça de Queirós",
+              "ano": 1888,
+              "disponivel": true
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "GET", "path": "/api/livros/999" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 404,
+            "headers": { "Content-Type": "application/json" },
+            "body": { "erro": "Livro não encontrado" }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        {
+          "and": [
+            { "equals": { "method": "POST", "path": "/api/livros" } },
+            { "not": { "contains": { "body": "titulo" } } }
+          ]
+        }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Campos obrigatórios em falta",
+              "mensagem": "O campo 'titulo' é obrigatório."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "POST", "path": "/api/livros" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 201,
+            "headers": {
+              "Content-Type": "application/json",
+              "Location": "/api/livros/4"
+            },
+            "body": {
+              "id": 4,
+              "status": "created",
+              "mensagem": "Livro adicionado com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/livros/1/emprestar" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 1,
+              "titulo": "Os Maias",
+              "disponivel": false,
+              "mensagem": "Livro emprestado com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/livros/2/emprestar" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Indisponível",
+              "mensagem": "O livro já está emprestado."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/livros/2/devolver" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "id": 2,
+              "titulo": "A Cidade e as Serras",
+              "disponivel": true,
+              "mensagem": "Livro devolvido com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "PUT", "path": "/api/livros/3/devolver" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Operação inválida",
+              "mensagem": "O livro já estava disponível."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/livros/1" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 200,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "mensagem": "Livro removido da biblioteca com sucesso."
+            }
+          }
+        }
+      ]
+    },
+
+    {
+      "predicates": [
+        { "equals": { "method": "DELETE", "path": "/api/livros/2" } }
+      ],
+      "responses": [
+        {
+          "is": {
+            "statusCode": 400,
+            "headers": { "Content-Type": "application/json" },
+            "body": {
+              "erro": "Não permitido",
+              "mensagem": "Não é possível remover um livro emprestado."
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
